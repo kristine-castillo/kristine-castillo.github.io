@@ -1083,7 +1083,7 @@
 </section>
 
         <!-- Section: English Fill in the Blank Grammar Game -->
-        <section id="game" class="scroll-mt-20 border-t border-slate-200 py-16 md:py-20">
+        <section id="game" class="notranslate scroll-mt-20 border-t border-slate-200 py-16 md:py-20" translate="no">
           <div class="reveal">
             <p class="text-xs font-bold uppercase tracking-[.24em] text-bluebrand">Interactive Challenge</p>
             <h2 class="display mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-4xl">Advanced English Grammar Mastery Game</h2>
@@ -1903,5 +1903,65 @@ if (perfectModal) {
       }
     });
   </script>
+
+  <!-- Automatic Korean translation: the English grammar game is excluded. -->
+  <div id="google_translate_element" aria-hidden="true"></div>
+  <style>
+    #google_translate_element { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip-path: inset(50%) !important; white-space: nowrap !important; }
+    .goog-te-banner-frame, iframe.goog-te-banner-frame, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+    body { top: 0 !important; }
+    html { margin-top: 0 !important; }
+  </style>
+  <script>
+    (function () {
+      let translationStarted = false;
+      let countryIsKorea = false;
+
+      function startKoreanTranslation() {
+        if (translationStarted) return;
+        const shouldTranslate = countryIsKorea || /^ko(?:-|$)/i.test(navigator.language || '') ||
+          (navigator.languages || []).some(lang => /^ko(?:-|$)/i.test(lang));
+        if (!shouldTranslate) return;
+
+        const combo = document.querySelector('.goog-te-combo');
+        if (!combo) return;
+        combo.value = 'ko';
+        combo.dispatchEvent(new Event('change', { bubbles: true }));
+        translationStarted = true;
+      }
+
+      window.googleTranslateElementInit = function () {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'ko',
+          autoDisplay: false,
+          multilanguagePage: true
+        }, 'google_translate_element');
+        let attempts = 0;
+        const timer = setInterval(function () {
+          startKoreanTranslation();
+          if (translationStarted || ++attempts > 40) clearInterval(timer);
+        }, 250);
+      };
+
+      // Detect visitors connecting from South Korea; if this fails, Korean browser
+      // language detection above remains available. No location permission is requested.
+      fetch('https://ipapi.co/country/', { cache: 'force-cache' })
+        .then(response => response.ok ? response.text() : '')
+        .then(country => {
+          countryIsKorea = country.trim().toUpperCase() === 'KR';
+          if (countryIsKorea) {
+            let attempts = 0;
+            const timer = setInterval(function () {
+              startKoreanTranslation();
+              if (translationStarted || ++attempts > 40) clearInterval(timer);
+            }, 250);
+          }
+        })
+        .catch(function () {});
+    })();
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+
 </body>
 </html>
