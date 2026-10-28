@@ -375,13 +375,144 @@
 	
 	
 	
+
+    /* Responsive layout: preserve the original animations and smooth scrolling */
+    img, video, canvas, svg, iframe {
+      max-width: 100%;
+    }
+
+    #menu-list {
+      max-width: 100%;
+    }
+
+    .popup {
+      width: 100%;
+      max-width: 1000px;
+      max-height: calc(100vh - 30px);
+      max-height: calc(100dvh - 30px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    @media (max-width: 1023px) {
+      .min-h-screen {
+        display: block;
+      }
+
+      .portrait-panel {
+        position: relative;
+        top: auto;
+        height: auto;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .portrait-panel > .relative.flex.flex-1 {
+        flex: initial;
+      }
+
+      main > div {
+        min-width: 0;
+      }
+
+      section[id] {
+        scroll-margin-top: 5rem;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .portrait-panel {
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+      }
+
+      .portrait-panel > .relative.flex.flex-1 {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      #home {
+        min-height: auto;
+      }
+
+      #menu-list {
+        max-height: calc(100dvh - 4.5rem);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #menu-list a {
+        padding-top: .65rem;
+        padding-bottom: .65rem;
+      }
+
+      .modal {
+        padding: max(10px, env(safe-area-inset-top))
+                 max(10px, env(safe-area-inset-right))
+                 max(10px, env(safe-area-inset-bottom))
+                 max(10px, env(safe-area-inset-left));
+      }
+
+      .popup {
+        max-height: calc(100dvh - 20px);
+        padding: 15px;
+      }
+
+      iframe {
+        max-width: 100%;
+        height: min(60dvh, 420px);
+      }
+
+      .slider-image {
+        max-width: 100%;
+        max-height: 60dvh;
+        object-fit: contain;
+      }
+
+      #grammar-game-form input[type="text"],
+      #grammar-game-form input[type="number"] {
+        max-width: 42vw;
+      }
+
+      #contact .reveal {
+        padding: 1.25rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .portrait-panel {
+        padding-left: .75rem;
+        padding-right: .75rem;
+      }
+
+      main > div {
+        padding-left: .875rem;
+        padding-right: .875rem;
+      }
+
+      #contact .reveal {
+        padding: 1rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .min-h-screen {
+        display: grid;
+        grid-template-columns: minmax(320px, 38vw) minmax(0, 1fr);
+      }
+
+      main, main > div {
+        min-width: 0;
+      }
+    }
+
   </style>
    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'>
     
 </head>
 <body class="bg-paper text-slate-700 antialiased">
   <!-- INAYOS: Binago ang grid template mula minmax(320px, 38%) papuntang 500px -->
-  <div class="min-h-screen md:grid md:grid-cols-[500px_1fr]">
+  <div class="min-h-screen md:grid">
     
     <!-- LEFT / TOP: Dynamic Portrait Panel -->
     <aside class="portrait-panel flex flex-col justify-between min-h-fit px-6 py-6 text-white md:px-10 lg:px-12">
