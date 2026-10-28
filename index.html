@@ -1,1 +1,1694 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Professional portfolio website" />
+  <title>Professional Portfolio | Kristine S. Castillo MA-ESL</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- CounterAPI library -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#10243e',
+            navy: '#0b1d35',
+            bluebrand: '#2864a8',
+            skysoft: '#eaf3ff',
+            paper: '#f7f9fc'
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            soft: '0 18px 55px rgba(17, 43, 78, .09)'
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; 
+    scrollbar-width: thin;
+    scrollbar-color: #93b5df #f1f5f9;
+    scroll-behavior: smooth;
+}
 
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b8cbea;
+    border-radius: 999px;
+    border: 1px solid #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #648bc1;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+    body { font-family: 'DM Sans', sans-serif; }
+    h1,h2,h3,.display { font-family: 'Manrope', sans-serif; }
+	
+	/** perfect **/
+	#Perfect-modal .popup {
+  position: relative;
+  overflow: visible;
+  animation: perfectPop .45s ease-out;
+}
+
+.trophy {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  font-size: 54px;
+  line-height: 1;
+  margin-bottom: 10px;
+  transform-origin: center bottom;
+  animation: trophyBounce .55s cubic-bezier(.34, 1.56, .64, 1) both;
+  will-change: transform;
+}
+
+@keyframes trophyBounce {
+  0%   { transform: translateY(-28px) scale(.65) rotate(-12deg); opacity: 0; }
+  55%  { transform: translateY(5px) scale(1.12) rotate(5deg); opacity: 1; }
+  75%  { transform: translateY(-4px) scale(.96) rotate(-2deg); }
+  100% { transform: translateY(0) scale(1) rotate(0); opacity: 1; }
+}
+
+/* Real confetti is rendered on a dedicated fixed canvas above the modal. */
+#Perfect-modal .popup::before,
+#Perfect-modal .popup::after {
+  content: none;
+}
+
+@keyframes perfectPop {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/** pop-up **/
+	.modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    /* Popup container */
+    .popup {
+      position: relative;
+      background:
+        radial-gradient(circle at 28% 16%, rgba(91, 154, 226, .27), transparent 34%),
+        linear-gradient(150deg, #112a49 0%, #0a1a2f 72%);
+      color: white;
+      width: 100%;
+      max-width: 1000px;
+      max-height: 100vh;
+      overflow-y: auto;
+      padding: 25px;
+      border-radius: 10px;
+      animation: appear 0.25s ease;
+    }
+	
+	
+	 .popup::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+      pointer-events: none;
+    }
+
+    /* Close button */
+    .close {
+      position: sticky;
+      top: 0;
+      float: right;
+      background: transparent;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 20;
+      margin: -8px -8px 5px 10px;
+    }
+    .close:hover {
+      background: #555;
+    }
+    /* Website content */
+    .content {
+      display: none;
+      clear: both;
+    }
+    .content.show {
+      display: block;
+    }
+    /* Image slider */
+    .image-slider {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin: 20px auto;
+      overflow: hidden;
+      border-radius: 5px;
+      /* background: #111; */
+    }
+    .slider-image {
+      display: none;
+      width: 100%;
+      height: auto;
+      max-height: 65vh;
+      object-fit: contain;
+    }
+    .slider-image.active {
+      display: block;
+    }
+    /* Navigation arrows */
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.2s;
+    }
+    .slider-arrow:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .slider-prev {
+      left: 12px;
+    }
+    .slider-next {
+      right: 12px;
+    }
+    /* Image counter */
+    .image-counter {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+    /* Hide arrows when only one image */
+    .image-slider.single-image .slider-arrow,
+    .image-slider.single-image .image-counter {
+      display: none;
+    }
+    /* Website iframe */
+    iframe {
+  display: block;
+  border: none;
+  width: 100%;
+  height: clamp(500px, 80vh, 900px);
+  background: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 600px) {
+     
+      .popup {
+        padding: 15px;
+        max-height: 90vh;
+      }
+
+      .slider-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+      }
+
+      .slider-prev {
+        left: 8px;
+      }
+      .slider-next {
+        right: 8px;
+      }
+      .slider-image {
+        max-height: 60vh;
+      }
+      iframe {
+        height: 300px;
+      }
+    }
+	/** pop-up **/
+	
+	
+	.paddingtop20{
+	padding-top:10px;
+	}
+	
+    .portrait-panel {
+      position: relative;
+      background:
+        radial-gradient(circle at 28% 16%, rgba(91, 154, 226, .27), transparent 34%),
+        linear-gradient(150deg, #112a49 0%, #0a1a2f 72%);
+    }
+
+    @media (min-width: 768px) {
+      .portrait-panel {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        min-height: 600px;
+        overflow: hidden;
+      }
+    }
+
+    .portrait-panel::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+      pointer-events: none;
+    }
+    .portrait {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      filter: drop-shadow(0 15px 20px rgba(0,0,0,.25));
+    }
+    .portrait-glow {
+      position: absolute; width: 70%; aspect-ratio: 1;
+      border-radius: 999px; background: rgba(71, 139, 216, .18);
+      filter: blur(28px); bottom: 7%; left: 15%;
+    }
+	
+	ul { padding-left:20px; list-style:none; }
+
+    .nav-link { position: relative; transition: color .25s ease; }
+    @media (min-width: 768px) {
+      .nav-link::after {
+        content: ""; position: absolute; left: 0; bottom: -7px; width: 0; height: 2px;
+        background: #2864a8; transition: width .25s ease;
+      }
+      .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .timeline-dot { box-shadow: 0 0 0 6px #eaf3ff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+	
+	
+	/** PERFECT **/
+	
+	/** PERFECT **/
+	
+	
+	
+  </style>
+   <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'>
+    
+</head>
+<body class="bg-paper text-slate-700 antialiased">
+  <!-- INAYOS: Binago ang grid template mula minmax(320px, 38%) papuntang 500px -->
+  <div class="min-h-screen md:grid md:grid-cols-[500px_1fr]">
+    
+    <!-- LEFT / TOP: Dynamic Portrait Panel -->
+    <aside class="portrait-panel flex flex-col justify-between min-h-fit px-6 py-6 text-white md:px-10 lg:px-12">
+
+      <div class="relative z-10 flex items-center justify-between">
+        <a href="#home" class="flex items-center gap-3" aria-label="Go to home">
+          <span class="grid h-10 w-10 place-items-center rounded-xl border border-white/20 bg-white/10 font-bold tracking-tight">KC</span>
+          <span class="text-xs font-semibold uppercase tracking-[.22em] text-blue-100">Portfolio</span>
+        </a>
+      </div>
+
+      <!-- Container para sa card at portrait -->
+      <div class="relative flex flex-1 flex-col items-center justify-center py-6">
+        <div class="portrait-glow hidden md:block"></div>
+
+        <!-- Desktop view: Larawan ay nasa itaas ng card -->
+        <div class="relative z-10 mb-4 hidden w-full justify-center md:flex md:h-full md:max-h-[55vh] md:items-end">
+          <img id="portrait-desktop" class="portrait h-auto max-h-full w-auto object-contain object-bottom"
+               src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/kf.webp" alt="Professional portrait" />
+        </div>
+
+        <!-- MAIN CARD CONTAINER -->
+        <div class="relative z-20 w-full max-w-sm rounded-2xl border border-white/15 bg-white/[.08] p-4 sm:p-5 backdrop-blur-md">
+
+          <!-- MOBILE VIEW -->
+          <div class="flex items-start gap-3 md:hidden">
+            <img
+              id="portrait-mobile"
+              class="portrait h-28 w-24 shrink-0 rounded-xl border border-white/20 bg-white/10 object-cover object-top"
+              src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/k1.webp"
+              alt="Professional portrait"
+            />
+
+            <div class="min-w-0 flex-1">
+              <p class="mb-1 text-[9px] font-bold uppercase tracking-wide text-blue-200">
+                Educator · Communicator . 
+              </p>
+
+              <h1 class="display break-words text-lg font-extrabold leading-snug text-white">
+                Kristine S. Castillo MA-ESL
+              </h1>
+
+              <p class="mt-2 text-xs leading-relaxed text-blue-50/75">
+                Helping learners grow through thoughtful teaching, communication, and continuous learning.
+              </p>
+
+              <p class="mt-3 flex items-center gap-2 text-[11px] leading-tight text-blue-100/80">
+                <span class="h-2.5 w-2.5 shrink-0 animate-pulse rounded-full bg-emerald-400"></span>
+                <span>Available for opportunities</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- DESKTOP VIEW -->
+          <div class="hidden md:block">
+            <p class="mb-1 text-[10px] font-bold uppercase tracking-[.25em] text-blue-200">
+              Educator · Communicator
+            </p>
+
+            <h1 class="display text-2xl font-extrabold leading-tight text-white">
+              Kristine S. Castillo MA-ESL 
+            </h1>
+
+            <p class="mt-2 text-sm leading-relaxed text-blue-50/75">
+              Helping learners grow through thoughtful teaching, communication, and continuous learning.
+            </p>
+
+            <div class="mt-3 flex items-center gap-2 text-xs text-blue-100/80">
+              <span class="h-2.5 w-2.5 shrink-0 animate-pulse rounded-full bg-emerald-400"></span>
+              <span>Available for opportunities</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="relative z-10 hidden md:flex items-center justify-between border-t border-white/15 pt-4 text-[11px] text-blue-100/65">
+        <span>© <span id="year"></span>· Designed by C. Cedric Tagle</span>
+        <a class="transition hover:text-white" href="https://cedrictagleportfolio.blogspot.com/" target="_blank">Let's Build Your Portfolio ↗</a>
+      </div>
+    </aside>
+
+    <!-- RIGHT: Scrollable Content -->
+    <main class="min-w-0">
+      <!-- Collapsible Mobile & Desktop Header Navigation -->
+      <header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 px-4 py-3 backdrop-blur-md sm:px-8 lg:px-12">
+        <nav class="mx-auto flex max-w-4xl items-center justify-between" aria-label="Main navigation">
+          
+          <span class="text-xs font-bold uppercase tracking-wider text-ink md:hidden">Navigation</span>
+
+          <!-- Mobile Hamburger Toggle Button -->
+          <button id="menu-btn" type="button" class="inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-slate-100 focus:outline-none md:hidden" aria-expanded="false" aria-label="Toggle Menu">
+            <svg id="menu-icon-open" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <svg id="menu-icon-close" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+
+          <!-- Collapsible Nav Items -->
+          <div id="menu-list" class="hidden absolute top-full left-0 w-full bg-white border-b border-slate-200 px-6 py-4 shadow-lg md:static md:shadow-none md:border-none md:p-0 md:w-auto md:flex md:items-center md:gap-x-6 text-xs font-semibold text-slate-600 sm:text-sm">
+            <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+              <a class="nav-link hover:text-bluebrand py-1 border-b md:border-none border-slate-100" href="#home">Home</a>
+              <a class="nav-link hover:text-bluebrand py-1 border-b md:border-none border-slate-100" href="#about">About</a>
+              <a class="nav-link hover:text-bluebrand py-1 border-b md:border-none border-slate-100" href="#experience">Experience</a>
+              <a class="nav-link hover:text-bluebrand py-1 border-b md:border-none border-slate-100" href="#research">Research</a>
+              <a class="nav-link hover:text-bluebrand py-1 border-b md:border-none border-slate-100" href="#development">Development</a>
+              <a class="nav-link hover:text-bluebrand py-1 border-b md:border-none border-slate-100" href="#certification">Certification</a>
+              <a class="nav-link hover:text-bluebrand py-1" href="#game">Grammar Game</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <div class="mx-auto max-w-4xl px-5 pb-16 sm:px-8 lg:px-12">
+        <!-- Section: Home -->
+        <section id="home" class="flex min-h-[90vh] md:min-h-[76vh] scroll-mt-24 flex-col justify-center py-10 md:py-20">
+          <div class="reveal">
+            <p class="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-[.24em] text-bluebrand">
+              <span class="h-px w-8 bg-bluebrand"></span> Welcome to my portfolio
+            </p>
+            <h2 class="display max-w-3xl text-3xl font-extrabold leading-[1.15] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+              Teaching with purpose.<br/><span class="text-bluebrand">Learning without limits.</span>
+            </h2>
+            <p class="mt-5 max-w-2xl text-sm leading-7 text-slate-500 sm:text-lg">
+              A showcase of my professional journey, academic background, teaching experience, and commitment to lifelong learning.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#about" class="inline-flex items-center gap-2 rounded-full bg-bluebrand px-5 py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-900/15 transition hover:-translate-y-0.5 hover:bg-ink">Explore my portfolio <span aria-hidden="true">↘</span></a>
+              <a href="#contact" class="inline-flex items-center rounded-full border border-slate-300 bg-white px-5 py-3 text-xs sm:text-sm font-bold text-ink transition hover:border-bluebrand hover:text-bluebrand">Contact me</a>
+			  <a href="#game" class="inline-flex items-center rounded-full border border-slate-300 bg-white px-5 py-3 text-xs sm:text-sm font-bold text-ink transition hover:border-bluebrand hover:text-bluebrand">Test your Skill?</a>
+            
+			</div>
+          </div>
+        </section>
+
+        <!-- Section: About -->
+        <section id="about" class="border-t border-slate-200 py-16 md:py-20">
+          <div class="reveal">
+            <p class="text-xs font-bold uppercase tracking-[.24em] text-bluebrand">01 / Introduction</p>
+            <h2 class="display mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-4xl">ACADEMIC QUALIFICATIONS</h2>
+            <p class="mt-5 max-w-3xl text-sm leading-7 text-slate-500 sm:text-base sm:leading-8">
+              I am an educator with a background in Information Technology and a Master of Arts in English as a Second Language (MA-ESL). I have three years of teaching experience at the University of the Cordilleras handling subjects such as  English, Social Sciences, Popular Culture, and Spanish as a foreign language. Moreover, I have <span class='font-bold text-bluebrand'>13 years of experience</span> teaching English to speakers of other languages with specialty in Basic and Advaned English, TOEIC Speaking, Business English and English for Specific Purposes.
+            </p>
+            <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-500 sm:text-base sm:leading-8">
+              I am passionate about education, communication, and helping students develop their knowledge and skills. My academic background in IT and language education has shaped my creative, adaptable, and student-centered approach to learning.
+            </p>
+          </div>
+          <div class="reveal mt-8 grid gap-4 sm:grid-cols-2">
+            <article class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+              <p class="text-xs font-bold uppercase tracking-widest text-bluebrand">Bachelor's Degree</p>
+              <h3 class="mt-2 text-base sm:text-lg font-bold text-ink">Bachelor of Science in Information Technology</h3>
+              <p class="mt-1 text-xs sm:text-sm text-slate-500">Baguio College of Technology · 2010</p>
+              <p class="mt-2 text-xs sm:text-sm font-medium text-slate-600">Academic achievement: First Honourable Mention</p>
+            </article>
+            <article class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+              <p class="text-xs font-bold uppercase tracking-widest text-bluebrand">Advanced Degree</p>
+              <h3 class="mt-2 text-base sm:text-lg font-bold text-ink">Master of Arts in English as a Second Language</h3>
+              <p class="mt-1 text-xs sm:text-sm text-slate-500">University of the Cordilleras · 2025</p>
+              <p class="mt-2 text-xs sm:text-sm font-medium text-slate-600">Professional experience: 3 years as a professor</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Section: Experience -->
+		<section id="experience" class="border-t border-slate-200 py-16 md:py-20">
+          <div class="reveal">
+            <p class="text-xs font-bold uppercase tracking-[.24em] text-bluebrand">02 / Experience</p>
+            <h2 class="display mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-4xl">Teaching experience</h2>
+            <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">A selection of the subjects and learning environments that have shaped my professional practice.</p>
+          </div>
+          <div class="reveal relative mt-8 space-y-8 border-l-2 border-blue-100 pl-6 sm:pl-9">
+            <article class="relative">
+              <span class="timeline-dot absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-bluebrand sm:-left-[45px]"></span>
+              <p class="text-xs font-bold uppercase tracking-widest text-bluebrand">University Educator</p>
+			  <small class="text-xs font-bold uppercase">2026 - Present</small>
+              <h3 class="mt-1 text-lg sm:text-xl font-bold text-ink">University of the Cordilleras</h3>
+              <p class="mt-2 text-xs sm:text-sm leading-6 text-slate-500">Taught a range of university subjects, encouraging critical thinking, communication strategies, analytical skills and student engagement.</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">Art Appreciation</span>
+                <span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">Purposive Communication</span>
+                <span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">Popular Culture</span>
+                <span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">The Contemporary World</span>
+                <span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">Spanish</span>
+				<span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">Language of Non-Literary Text</span>
+				<span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">Business English</span>
+				<span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">OPIC</span>
+				<span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">TOEIC Speaking</span>
+				<span class="rounded-full bg-skysoft px-3 py-1 text-xs font-semibold text-bluebrand">Basic and Advanced English</span>
+              </div>
+            </article>
+            <article class="relative">
+              <span class="timeline-dot absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-bluebrand sm:-left-[45px]"></span>
+              <p class="text-xs font-bold uppercase tracking-widest text-bluebrand">Online ESL Teacher</p>
+			  <small class="text-xs font-bold uppercase">2013 - 2015</small>
+              <h3 class="mt-1 text-lg sm:text-xl font-bold text-ink">One-on-one English Lessons</h3>
+              <ul class="mt-2 space-y-1.5 text-xs sm:text-sm leading-6 text-slate-500">
+                <li>• Delivered tailored online English lessons for Korean students of different age groups.</li>
+                <li>• Helped learners improve confidence, fluency, pronunciation, and grammar.</li>
+                <li>• Taught Daily Conversational English, Travel English, and Business Communication.</li>
+                <li>• Monitored student progress and provided constructive feedback after sessions.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- Section: Research -->
+		<section id="research" class="border-t border-slate-200 py-16 md:py-20">
+          <div class="reveal">
+            <p class="text-xs font-bold uppercase tracking-[.24em] text-bluebrand">03 / Research & Publication</p>
+            <h2 class="display mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-4xl">Research & publications</h2>
+            <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">Use this section to feature research, academic papers, publications, or conference presentations.</p>
+          </div>
+          
+<!-- Research Publication Card -->
+<div onclick="showDiv('Res1')" data-counter="Res1" class="c1it3m reveal group relative mt-8 cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blue-300 hover:bg-blue-50/70 hover:shadow-lg sm:p-7">
+    <div class="absolute inset-y-0 left-0 w-1 bg-bluebrand transition-all duration-300 group-hover:w-1.5"></div>
+    
+    <div class="flex items-start gap-4 pl-1 sm:gap-5">
+        <!-- Publication Icon -->
+        <div class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-lg text-bluebrand transition-all duration-300 group-hover:border-blue-200 group-hover:bg-blue-100">
+            <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+        </div>  
+
+        <!-- Publication Details -->
+        <div class="min-w-0 flex-1">
+            <!-- Title Row -->
+            <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                    <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-blue-700">Research Publication</p>
+                    <h3 class="text-base font-semibold leading-snug tracking-tight text-slate-800 transition-colors duration-300 group-hover:text-blue-950 sm:text-lg">
+                        Inhibiting Factors in the Oral English Proficiency of Korean English Learners in Baguio City
+                    </h3>
+                </div>
+                <!-- External Link Indicator -->
+                <i class="fa-solid fa-arrow-up-right-from-square mt-1 shrink-0 text-sm text-slate-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-700" aria-hidden="true"></i>
+            </div>
+
+            <!-- ISBN and Author -->
+            <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs sm:text-sm">
+                <span class="inline-flex items-center gap-2 font-semibold text-bluebrand">
+                    <i class="fa-solid fa-barcode text-blue-500" aria-hidden="true"></i>
+                    ISBN 978-621-507-172-1
+                </span>
+                <span class="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block"></span>
+                <span class="text-slate-500 transition-colors duration-300 group-hover:text-slate-600">
+                    CASTILLO, K. (2025)
+                </span>
+            </div>
+
+            <!-- Publishing Organizations -->
+            <div class="mt-4 border-t border-slate-100 pt-3 transition-colors duration-300 group-hover:border-blue-100">
+                <p class="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    Publishing & Registration
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2.5 text-xs leading-6 text-slate-500 transition-colors duration-300 group-hover:text-slate-700 sm:text-sm">
+                        <i class="fa-solid fa-circle-check mt-1 shrink-0 text-bluebrand" aria-hidden="true"></i>
+                        <span>NATIONAL LIBRARY OF THE PHILIPPINES</span>
+                    </li>
+                    <li class="flex items-start gap-2.5 text-xs leading-6 text-slate-500 transition-colors duration-300 group-hover:text-slate-700 sm:text-sm">
+                        <i class="fa-solid fa-building-columns mt-1 shrink-0 text-bluebrand" aria-hidden="true"></i>
+                        <span>Dreamer Publishing Services</span>
+                    </li>
+                </ul>
+            </div>  
+        </div>
+    </div>
+</div>
+
+<!-- Published Work Card -->
+<div onclick="showDiv('Pub1')" class="reveal group relative mt-8 cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blue-300 hover:bg-blue-50/70 hover:shadow-lg sm:p-7">
+    <!-- Blue Accent -->
+    <div class="absolute inset-y-0 left-0 w-1 bg-bluebrand transition-all duration-300 group-hover:w-1.5"></div>
+
+    <div class="flex items-start gap-4 pl-1 sm:gap-5">
+        <!-- Publication Icon -->
+        <div class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-lg text-bluebrand transition-all duration-300 group-hover:border-blue-200 group-hover:bg-blue-100">
+            <i class="fa-solid fa-feather" aria-hidden="true"></i>
+        </div>
+
+        <!-- Publication Details -->
+        <div class="min-w-0 flex-1">
+            <!-- Title Row -->
+            <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                    <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-blue-700">
+                        Published Work
+                    </p>
+                    <h3 class="text-base font-semibold leading-snug tracking-tight text-slate-800 transition-colors duration-300 group-hover:text-blue-950 sm:text-lg">
+                        Por Encima De Las Luces Del Valle
+                    </h3>
+                </div>
+
+                <!-- External Link Indicator -->
+                <i class="fa-solid fa-arrow-up-right-from-square mt-1 shrink-0 text-sm text-slate-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-700" aria-hidden="true"></i>
+            </div>
+
+            <!-- ISSN -->
+            <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs sm:text-sm">
+                <span class="inline-flex items-center gap-2 font-semibold text-bluebrand">
+                    <i class="fa-solid fa-barcode text-blue-500" aria-hidden="true"></i>
+                    ISSN 3116-4188
+                </span>
+            </div>
+
+            <!-- Publishing House -->
+            <div class="mt-4 border-t border-slate-100 pt-3 transition-colors duration-300 group-hover:border-blue-100">
+                <p class="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    Publishing & Registration
+                </p>
+                <p class="flex items-start gap-2.5 text-xs leading-6 text-slate-500 transition-colors duration-300 group-hover:text-slate-700 sm:text-sm">
+                    <i class="fa-solid fa-building-columns mt-1 shrink-0 text-bluebrand" aria-hidden="true"></i>
+                    <span>The Wise Researcher</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+		  
+        </section>
+		
+		<!-- Section: Development -->
+		<section id="development" class="border-t border-slate-200 py-16 md:py-20">
+  <div class="reveal">
+    <p class="text-xs font-bold uppercase tracking-[.24em] text-bluebrand">04 / Community Involvement</p>
+    <h2 class="display mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-4xl">COMMUNITY INVOLVEMENT</h2>
+    <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">
+      Dedicated to community empowerment and literacy through practical language instruction, educational workshops, and outreach programs.
+    </p>
+  </div>
+
+  <div onclick="showDiv('Envolve1')" class="reveal group relative mt-8 cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blue-300 hover:bg-blue-50/70 hover:shadow-lg sm:p-7">
+    <!-- Blue Accent -->
+    <div class="absolute inset-y-0 left-0 w-1 bg-bluebrand transition-all duration-300 group-hover:w-1.5"></div>
+
+    <div class="flex items-start gap-4 pl-1 sm:gap-5">
+      
+      <div class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-lg text-bluebrand transition-all duration-300 group-hover:border-blue-200 group-hover:bg-blue-100">
+        <i class="fa-solid fa-user-group" aria-hidden="true"></i>
+      </div>
+
+      <div class="min-w-0 flex-1">
+        <!-- Title Row -->
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-blue-700">
+              Lead Spanish Instructor
+            </p>
+            <h3 class="text-base font-semibold leading-snug tracking-tight text-slate-800 transition-colors duration-300 group-hover:text-blue-950 sm:text-lg">
+              Foreign Language Tutorial: Basic Spanish
+            </h3>
+          </div>
+
+          <!-- External Link Indicator -->
+          <i class="fa-solid fa-arrow-up-right-from-square mt-1 shrink-0 text-sm text-slate-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-700" aria-hidden="true"></i>
+        </div>
+
+        <!-- Location & Date -->
+        <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs sm:text-sm">
+          <span class="inline-flex items-center gap-2 font-semibold text-bluebrand">
+            <i class="fa-solid fa-map-pin" aria-hidden="true"></i>
+            Baguio City Public Library
+          </span>
+          <span class="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block"></span>
+          <span class="text-slate-500 transition-colors duration-300 group-hover:text-slate-600">
+            July 4, 2026
+          </span>
+        </div>
+
+        <!-- Beneficiaries & Details -->
+        <div class="mt-4 border-t border-slate-100 pt-3 transition-colors duration-300 group-hover:border-blue-100">
+          <p class="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+            Program Details & Beneficiaries
+          </p>
+          <p class="flex items-start gap-2.5 text-xs leading-6 text-slate-500 transition-colors duration-300 group-hover:text-slate-700 sm:text-sm">
+            <i class="fa-solid fa-chevron-right mt-1 shrink-0 text-bluebrand" aria-hidden="true"></i>
+            <span>Taught introductory Spanish (alphabet, numbers, greetings, pronunciation, basic grammar, and listening exercises) to community learners in partnership with the UC CAS Language Department.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+        <!-- Section: Certification -->
+<section id="certification" class="scroll-mt-20 border-t border-slate-200 py-16 md:py-20">
+  <div class="reveal">
+    <p class="text-xs font-bold uppercase tracking-[.24em] text-bluebrand">05 / Professional Development</p>
+    <h2 class="display mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-4xl">Trainings & Seminars Attended</h2>
+    <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base">
+      Continuous professional development through seminars, workshops, and specialized training programs.
+    </p>
+  </div>
+
+  <div class="reveal mt-8 grid gap-4 sm:grid-cols-2">
+    
+    <!-- Item 1 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-chalkboard-user"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Nov 7–8, 2024 · UC</span>
+          <h3 class="mt-1 font-bold text-ink">Teaching Pedagogies: In-House Training</h3>
+          <p class="mt-2 text-xs text-slate-500">Empowering educators through effective pedagogy training.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-language"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">May 14, 2025 · CB Language</span>
+          <h3 class="mt-1 font-bold text-ink">100-Hour Spanish Conversational Program</h3>
+          <p class="mt-2 text-xs text-slate-500">Building fluency through immersive Spanish practice.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-award"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Jan 24, 2025 · ISO</span>
+          <h3 class="mt-1 font-bold text-ink">ISO Training</h3>
+          <p class="mt-2 text-xs text-slate-500">Ensuring quality standards in higher education.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Sep 10, 2025 · British Council</span>
+          <h3 class="mt-1 font-bold text-ink">ACELT and British Council</h3>
+          <p class="mt-2 text-xs text-slate-500">Enhancing English teaching through global standards.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-certificate"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Dec 1, 2025 · HAI English Training</span>
+          <h3 class="mt-1 font-bold text-ink">TESOL Training</h3>
+          <p class="mt-2 text-xs text-slate-500">Improving English teaching for global learners.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 6 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-globe"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Dec 1, 2025 · HAI English Training</span>
+          <h3 class="mt-1 font-bold text-ink">Cultural Studies Training Course</h3>
+          <p class="mt-2 text-xs text-slate-500">Understanding cultures to enrich learning.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 7 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-file-signature"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Jan 31, 2026 · UC-CAS</span>
+          <h3 class="mt-1 font-bold text-ink">Ensuring Coherence in Teaching & Test Construction</h3>
+          <p class="mt-2 text-xs text-slate-500">Enhancing test constructions in a taxonomic level.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 8 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-diagram-project"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Mar 27, 2026 · UC-CAS</span>
+          <h3 class="mt-1 font-bold text-ink">Course Learning Outcomes (CLOs & POs)</h3>
+          <p class="mt-2 text-xs text-slate-500">Knowledge in formulating CLOs and tracking cycles.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 9 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Feb 25, 2026 · UC-CAS</span>
+          <h3 class="mt-1 font-bold text-ink">Fulbright Specialist Program Workshop</h3>
+          <p class="mt-2 text-xs text-slate-500">Innovation for Teaching, Learning, and Research.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 10 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Jul 30, 2026 · UC CAS</span>
+          <h3 class="mt-1 font-bold text-ink">CLO & PO Alignment Part 2</h3>
+          <p class="mt-2 text-xs text-slate-500">Upgrading and alignment of CLOs/POs to syllabus assessment.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 11 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Aug 1, 2026 · UC CAS</span>
+          <h3 class="mt-1 font-bold text-ink">Re-Echo Seminar by Ms. Grace Buyagan</h3>
+          <p class="mt-2 text-xs text-slate-500">Based on UNICEF's Program regarding Indigenous Languages.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item 12 -->
+    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div class="flex items-start gap-4">
+        <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-bluebrand">
+          <i class="fa-solid fa-laptop-code"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-bluebrand">Aug 7, 2026 · UC CAS - BAELS</span>
+          <h3 class="mt-1 font-bold text-ink">Webinar: Language, Mobility & Workforce</h3>
+          <p class="mt-2 text-xs text-slate-500">Effect of English Language on emerging workforce.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+        <!-- Section: English Fill in the Blank Grammar Game -->
+        <section id="game" class="scroll-mt-20 border-t border-slate-200 py-16 md:py-20">
+          <div class="reveal">
+            <p class="text-xs font-bold uppercase tracking-[.24em] text-bluebrand">Interactive Challenge</p>
+            <h2 class="display mt-2 text-2xl font-extrabold tracking-tight text-ink sm:text-4xl">Advanced English Grammar Mastery Game</h2>
+            <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
+              Test your advanced grammar skills! The questions are randomized and more challenging to put your grammar proficiency to the test.
+            </p>
+          </div>
+
+          <div class="reveal mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+            <form id="grammar-game-form" onsubmit="evaluateGame(event)" class="space-y-6">
+              
+              <!-- Dito i-injected ang random questions -->
+              <div id="quiz-container" class="space-y-6"></div>
+
+              <div class="flex items-center gap-4 pt-4 border-t border-slate-100 flex-wrap">
+                <button type="submit" class="rounded-full bg-bluebrand px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-md transition hover:bg-ink">
+                  Submit Game
+                </button>
+                <button type="button" onclick="loadRandomQuiz()" class="rounded-full border border-slate-300 bg-white px-5 py-3 text-xs sm:text-sm font-bold text-slate-700 transition hover:bg-slate-100">
+                  <i class="fa-solid fa-dice text-bluebrand"></i> Shuffle New Questions 
+                </button>
+                <span id="game-result-msg" class="text-xs sm:text-sm font-semibold"></span>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Section: Contact -->
+        <section id="contact" class="scroll-mt-20 border-t border-slate-200 py-16 md:py-20">
+  <div class="reveal overflow-hidden rounded-3xl bg-ink p-6 sm:p-10 text-white">
+    <p class="text-xs font-bold uppercase tracking-[.24em] text-blue-200">Start Learning</p>
+    <h2 class="display mt-2 text-2xl sm:text-4xl font-extrabold">Ready to learn something new?</h2>
+    <p class="mt-3 max-w-xl text-xs sm:text-sm leading-6 text-blue-100/75">
+      If you have questions about my lessons, need guidance, or are eager to start learning, feel free to send me an email anytime.
+    </p>
+    <a href="mailto:your.email@example.com" class="mt-6 inline-flex rounded-full bg-white px-6 py-3 text-xs sm:text-sm font-bold text-ink transition hover:bg-skysoft">
+      Send an Email ↗
+    </a>
+  </div>
+</section>
+
+        <footer class="border-t border-slate-200 py-6 text-xs text-slate-400 flex w-full flex-wrap items-center justify-between gap-2">
+          <span>Designed by C. Cedric Tagle</span>
+          <a class="ml-auto text-right transition hover:text-blue-300" href="https://cedrictagleportfolio.blogspot.com/" target="_blank">
+            Let's Build Your Website ↗
+          </a>
+        </footer>
+      </div>
+    </main>
+	
+  </div>
+
+  <!-- You Need Me Modal (0/5 hanggang 2/5 Score) -->
+  <div id="you-need-me-modal" class="modal" onclick="closeFailOutside(event)">
+    <div class="popup max-w-md text-center p-6 bg-slate-900 border border-blue-500/30 rounded-2xl shadow-2xl">
+      <button class="close" onclick="closeFailModal()" aria-label="Close popup">&times;</button>
+      <div class="flex flex-col items-center">
+        <h2 class="text-2xl font-black uppercase tracking-wider mb-2 text-red-400">YOU NEED ME!</h2>
+        <p class="text-xs text-blue-100/80 mb-4">Looks like you need help with your English grammar! Let's work together to boost your language skills.</p>
+        <a href="#contact" onclick="closeFailModal()" class="w-full rounded-full bg-bluebrand py-3 text-xs font-bold text-white transition hover:bg-blue-600">
+          Reach Out to Me
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Almost There Modal (3/5 o 4/5 Score) -->
+  <div id="almost-there-modal" class="modal" onclick="closeAlmostOutside(event)">
+    <div class="popup max-w-md text-center p-6 bg-slate-900 border border-white rounded-2xl shadow-2xl">
+      <button class="close" onclick="closeAlmostModal()" aria-label="Close popup">&times;</button>
+      <div class="flex flex-col items-center">
+        <h2 class="text-2xl font-white uppercase tracking-wider mb-2">ALMOST THERE!</h2>
+        <p class="text-xs text-blue-100/80 mb-4">You're almost there! You still have a few grammar questions to correct. Review your answers carefully and try again to achieve a perfect score!</p>
+        <button onclick="closeAlmostModal()" class="w-full rounded-full bg-amber-600 py-3 text-xs font-bold text-white transition hover:bg-amber-700">
+          Try Again
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Almost There Modal (5/5 Score) -->
+  <div id="Perfect-modal" class="modal" onclick="closePerfectOutside(event)">
+  <div class="popup max-w-md text-center p-6 bg-slate-900 border border-amber-500/30 rounded-2xl shadow-2xl perfect-popup">
+
+    <button class="close" onclick="closePerfectModal()" aria-label="Close popup">&times;</button>
+
+    <div class="flex flex-col items-center">
+      <div class="trophy">🏆</div>
+
+      <h2 class="text-2xl font-black uppercase tracking-wider mb-2 text-amber-400">
+        Perfect!
+      </h2>
+
+      <p class="text-xs text-blue-100/80 mb-4">
+        Perfect Score! 5/5. Excellent work!
+      </p>
+    </div>
+
+  </div>
+</div>
+
+  <!-- Popup Modal -->
+  <div id="modal" class="modal" onclick="closeOutside(event)">
+    <div class="popup">
+      <button class="close"
+              onclick="closePopup()"
+              aria-label="Close popup">
+        &times;
+      </button>
+      <!-- WEBSITE 1 -->
+      <div id="Pub1" class="content">
+        <iframe
+  src="https://drive.google.com/file/d/1hVfALw7M8DQfc74TWK9_B1nsFGe515TQ/preview"
+  width="100%"
+  style="border: none;"
+  allow="autoplay"
+  loading="lazy"
+  allowfullscreen>
+</iframe>
+      </div>
+      <!-- WEBSITE 2 -->
+	  <div id="Res1" class="content">
+        <iframe
+  src="https://drive.google.com/file/d/1p1digBp9ZjfXjGg1Yhw4CjE_nsufokP1/preview"
+  width="100%"
+  style="border: none;"
+  allow="autoplay"
+  loading="lazy"
+  allowfullscreen>
+</iframe>
+      </div>
+	  
+          <div id="Envolve1" class="content">
+      
+		<div class="mb-4">
+    <h2>July 4, 2026 | Foreign Language Tutorial: Basic Spanish</h2>
+    <p class="mt-1 text-sm text-gray-300">
+    Taught basic Spanish to introduce learners to common words, useful phrases, and simple everyday expressions. Guided learners through basic vocabulary and pronunciation to help them develop foundational Spanish communication skills.
+	</p>
+	</div>
+
+		<div class="image-slider">
+          <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib1.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib2.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib3.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib4.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib5.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib6.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib7.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib8.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib9.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib10.webp"
+            class="slider-image">
+		  <img
+            src="https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/lib11.webp"
+            class="slider-image">
+		  
+          <button class="slider-arrow slider-prev"
+                  onclick="changeSlide(this, -1)"
+                  aria-label="Previous picture">
+            &#10094;
+          </button>
+          <button class="slider-arrow slider-next"
+                  onclick="changeSlide(this, 1)"
+                  aria-label="Next picture">
+            &#10095;
+          </button>
+          <div class="image-counter">1 / 3</div>
+        </div>
+      </div>
+	  
+    </div>
+  </div>
+
+ <!-- Scripts -->
+  <script>
+    const currentYear = new Date().getFullYear();
+    if (document.getElementById('year')) document.getElementById('year').textContent = currentYear;
+    if (document.getElementById('year-footer')) document.getElementById('year-footer').textContent = currentYear;
+
+    // Mobile Navigation Toggle
+    const menuBtn = document.getElementById('menu-btn');
+    const menuList = document.getElementById('menu-list');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+
+    menuBtn.addEventListener('click', () => {
+      const isHidden = menuList.classList.contains('hidden');
+      menuList.classList.toggle('hidden', !isHidden);
+      iconOpen.classList.toggle('hidden', isHidden);
+      iconClose.classList.toggle('hidden', !isHidden);
+      menuBtn.setAttribute('aria-expanded', isHidden);
+    });
+
+    // Close menu upon clicking a navigation link
+    document.querySelectorAll('#menu-list a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          menuList.classList.add('hidden');
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Reveal sections on scroll
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+    // Image swapping configuration
+    const sectionImages = {
+      'home': 'https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/kf.webp',
+      'about': 'https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/kf2.webp',
+      'experience': 'https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/kf3.webp',
+      'research': 'https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/kf4.webp',
+      'certification': 'https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/kf.webp',
+      'game': 'https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/kf2.webp',
+      'contact': 'https://raw.githubusercontent.com/BaguioGit/BaguioGit/main/image/kf.webp'
+    };
+
+    const portraitDesktop = document.getElementById('portrait-desktop');
+    const portraitMobile = document.getElementById('portrait-mobile');
+    let activeSectionId = 'home';
+    let changePortraitTimeout = null;
+
+    function changePortrait(newSrc) {
+      if (changePortraitTimeout) {
+        clearTimeout(changePortraitTimeout);
+      }
+      if (portraitDesktop) {
+        portraitDesktop.style.opacity = '0';
+        portraitDesktop.style.transform = 'scale(0.95)';
+      }
+      if (portraitMobile) {
+        portraitMobile.style.opacity = '0';
+      }
+      changePortraitTimeout = setTimeout(() => {
+        if (portraitDesktop) {
+          portraitDesktop.src = newSrc;
+          portraitDesktop.style.opacity = '1';
+          portraitDesktop.style.transform = 'scale(1)';
+        }
+        if (portraitMobile) {
+          portraitMobile.src = newSrc;
+          portraitMobile.style.opacity = '1';
+        }
+      }, 250);
+    }
+
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach((link) => {
+            const active = link.getAttribute('href') === '#' + id;
+            link.classList.toggle('active', active);
+            if (active) {
+              link.classList.add('text-bluebrand');
+              link.setAttribute('aria-current', 'page');
+            } else {
+              link.classList.remove('text-bluebrand');
+              link.removeAttribute('aria-current');
+            }
+          });
+
+          if (sectionImages[id] && activeSectionId !== id) {
+            activeSectionId = id;
+            changePortrait(sectionImages[id]);
+          }
+        }
+      });
+    }, { rootMargin: '-30% 0px -50% 0px' });
+
+    sections.forEach((section) => sectionObserver.observe(section));
+
+
+    // --- ADVANCED & RANDOMIZED GRAMMAR QUESTION BANK ---
+  
+const inputField = `<input type="text" data-id="0" class="inline-block w-28 rounded border border-slate-300 px-2 py-1 text-center text-sm focus:border-bluebrand focus:outline-none" placeholder="answer" required />`;
+
+const questionBank = [
+  {
+    question: `Hardly ${inputField} she entered the room when the phone rang.`,
+    answers: ["had"],
+    hint: "Inversion with 'Hardly ... when'."
+  },
+  {
+    question: `Had the witnesses ${inputField} sooner, the verdict might have been different.`,
+    answers: ["spoken"],
+    hint: "Inverted third conditional."
+  },
+  {
+    question: `Not only ${inputField} she finish her thesis, but she also won an award.`,
+    answers: ["did"],
+    hint: "Negative inversion."
+  },
+  {
+    question: `It is imperative that every applicant ${inputField} the required documents.`,
+    answers: ["submit"],
+    hint: "Mandative subjunctive."
+  },
+  {
+    question: `By next year, she ${inputField} completed her research.`,
+    answers: ["will have"],
+    hint: "Future perfect."
+  },
+  {
+    question: `No sooner had he arrived ${inputField} the meeting began.`,
+    answers: ["than"],
+    hint: "No sooner ... than."
+  },
+  {
+    question: `If she had accepted the position, she ${inputField} managing the department now.`,
+    answers: ["would be"],
+    hint: "Mixed conditional."
+  },
+  {
+    question: `Little ${inputField} the investigators suspect that the evidence had been concealed.`,
+    answers: ["did"],
+    hint: "Negative adverbial inversion."
+  },
+  {
+    question: `The report recommends that the regulations ${inputField} revised immediately.`,
+    answers: ["be"],
+    hint: "Passive subjunctive."
+  },
+  {
+    question: `Under no circumstances ${inputField} confidential information be disclosed.`,
+    answers: ["should"],
+    hint: "Negative inversion."
+  },
+  {
+    question: `The manuscript is believed ${inputField} written in the fifteenth century.`,
+    answers: ["to have been"],
+    hint: "Perfect passive infinitive."
+  },
+  {
+    question: `I would rather you ${inputField} the matter yesterday.`,
+    answers: ["had not discussed"],
+    hint: "Past preference."
+  },
+  {
+    question: `Only after reviewing the evidence ${inputField} the judge announce the verdict.`,
+    answers: ["did"],
+    hint: "Inversion after 'Only after'."
+  },
+  {
+    question: `The professor spoke as though she ${inputField} the experiment herself.`,
+    answers: ["had conducted"],
+    hint: "Unreal past comparison."
+  },
+  {
+    question: `Never before ${inputField} such a complex phenomenon been documented.`,
+    answers: ["has"],
+    hint: "Present perfect inversion."
+  },
+  {
+    question: `Despite ${inputField} repeatedly warned, he proceeded with the experiment.`,
+    answers: ["being"],
+    hint: "Passive gerund."
+  },
+  {
+    question: `So compelling ${inputField} her argument that nobody challenged it.`,
+    answers: ["was"],
+    hint: "Inversion with 'So + adjective'."
+  },
+  {
+    question: `Were the company ${inputField} reconsider its strategy, investor confidence might improve.`,
+    answers: ["to"],
+    hint: "Hypothetical inversion."
+  },
+  {
+    question: `The findings, rather than the preliminary assumptions, ${inputField} the basis for the revised theory.`,
+    answers: ["form"],
+    hint: "Subject–verb agreement."
+  },
+  {
+    question: `Had the warning been heeded, the consequences ${inputField} avoided.`,
+    answers: ["might have been"],
+    hint: "Passive perfect conditional."
+  }
+];
+
+let currentActiveQuiz = [];
+
+function loadRandomQuiz() {
+  const shuffled = [...questionBank];
+
+  // Proper random shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  currentActiveQuiz = shuffled.slice(0, 5);
+
+  const container = document.getElementById("quiz-container");
+  container.innerHTML = "";
+
+  currentActiveQuiz.forEach((item, index) => {
+    // Give each question its own correct input ID
+    const htmlQuestion = item.question.replace(
+      /data-id=(['"])\d+\1/,
+      `data-id="${index}"`
+    );
+
+    const div = document.createElement("div");
+    div.className =
+      "rounded-xl border border-slate-100 bg-slate-50 p-4";
+
+    div.innerHTML = `
+      <label class="block text-sm font-semibold text-slate-800">
+        ${index + 1}. ${htmlQuestion}
+      </label>
+      <p class="mt-1 text-xs text-slate-400">
+        Hint: ${item.hint}
+      </p>
+    `;
+
+    container.appendChild(div);
+  });
+
+  document.getElementById("game-result-msg").textContent = "";
+
+  // Clear previous feedback and close old popups
+  container.querySelectorAll("input").forEach(input => {
+    input.classList.remove("border-red-500", "border-emerald-500");
+  });
+
+  closeAllQuizModals();
+}
+
+function evaluateGame(event) {
+  if (event) event.preventDefault();
+
+  let score = 0;
+  const total = currentActiveQuiz.length;
+  const container = document.getElementById("quiz-container");
+
+  currentActiveQuiz.forEach((item, index) => {
+    const inputEl = container.querySelector(
+      `input[data-id="${index}"]`
+    );
+
+    if (!inputEl) return;
+
+    const userAnswer = inputEl.value
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, " ");
+
+    const acceptedAnswers = item.answers.map(answer =>
+      answer.trim().toLowerCase().replace(/\s+/g, " ")
+    );
+
+    const isCorrect = acceptedAnswers.includes(userAnswer);
+
+    inputEl.classList.toggle("border-emerald-500", isCorrect);
+    inputEl.classList.toggle("border-red-500", !isCorrect);
+
+    if (isCorrect) score++;
+  });
+
+  const resultMsg = document.getElementById("game-result-msg");
+
+  closeAllQuizModals();
+
+  if (score === total) {
+    resultMsg.className =
+      "text-xs sm:text-sm font-semibold text-emerald-600";
+    resultMsg.textContent =
+      `Perfect Score! ${score}/${total}. Excellent work!`;
+	  
+	document.getElementById("Perfect-modal")
+      .classList.add("show");
+
+    document.body.style.overflow = "hidden";  
+	
+	loadRandomQuiz();
+	  
+  } else if (score >= 3) {
+    resultMsg.className =
+      "text-xs sm:text-sm font-semibold text-amber-600";
+    resultMsg.textContent =
+      `Score: ${score}/${total}. Almost There!`;
+
+    document.getElementById("almost-there-modal")
+      .classList.add("show");
+
+    document.body.style.overflow = "hidden";
+  } else {
+    resultMsg.className =
+      "text-xs sm:text-sm font-semibold text-red-500";
+    resultMsg.textContent =
+      `Score: ${score}/${total}. Keep practicing!`;
+
+    document.getElementById("you-need-me-modal")
+      .classList.add("show");
+
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeAllQuizModals() {
+  document.getElementById("you-need-me-modal")
+    .classList.remove("show");
+
+  document.getElementById("almost-there-modal")
+    .classList.remove("show");
+
+  document.body.style.overflow = "";
+}
+
+function closeFailModal() {
+  document.getElementById("you-need-me-modal")
+    .classList.remove("show");
+
+  document.body.style.overflow = "";
+}
+
+function closeFailOutside(event) {
+  if (event.target.id === "you-need-me-modal") {
+    closeFailModal();
+  }
+}
+
+function closeAlmostModal() {
+  document.getElementById("almost-there-modal")
+    .classList.remove("show");
+
+  document.body.style.overflow = "";
+}
+
+function closeAlmostOutside(event) {
+  if (event.target.id === "almost-there-modal") {
+    closeAlmostModal();
+  }
+}
+
+
+
+function closePerfectModal() {
+  document.getElementById("Perfect-modal")
+    .classList.remove("show");
+
+  document.body.style.overflow = "";
+}
+
+function closePerfectOutside(event) {
+  if (event.target.id === "Perfect-modal") {
+    closePerfectModal();
+  }
+}
+// Attach listeners without requiring changes to your HTML
+document.addEventListener("DOMContentLoaded", function () {
+  loadRandomQuiz();
+
+  const quizForm = document.getElementById("quiz-form");
+
+  if (quizForm) {
+    quizForm.addEventListener("submit", evaluateGame);
+  }
+
+  const retryButton = document.getElementById("retry-button");
+
+  if (retryButton) {
+    retryButton.addEventListener("click", loadRandomQuiz);
+  }
+});
+
+
+// PERFECT SCORE CONFETTI — always above the modal and finishes quickly
+let perfectConfettiInstance = null;
+let perfectConfettiCanvas = null;
+let perfectConfettiPlayed = false;
+
+function launchPerfectConfetti() {
+  if (typeof confetti !== "function") return;
+
+  // Create one dedicated canvas at the top document layer.
+  if (!perfectConfettiCanvas) {
+    perfectConfettiCanvas = document.createElement("canvas");
+    perfectConfettiCanvas.id = "perfect-confetti-canvas";
+    Object.assign(perfectConfettiCanvas.style, {
+      position: "fixed",
+      inset: "0",
+      width: "100%",
+      height: "100%",
+      pointerEvents: "none",
+      zIndex: "10001"
+    });
+    document.body.appendChild(perfectConfettiCanvas);
+
+    perfectConfettiInstance = confetti.create(perfectConfettiCanvas, {
+      resize: true,
+      useWorker: true
+    });
+  }
+
+  // Prevent duplicate bursts if the modal observer fires more than once.
+  if (perfectConfettiPlayed) return;
+  perfectConfettiPlayed = true;
+
+  const colors = ["#fbbf24", "#fde68a", "#ffffff", "#60a5fa", "#f472b6"];
+
+  perfectConfettiInstance({
+    particleCount: 150,
+    spread: 115,
+    startVelocity: 48,
+    gravity: 1.5,
+    ticks: 115,
+    decay: 0.94,
+    scalar: 1,
+    origin: { x: 0.5, y: 0.55 },
+    colors,
+    disableForReducedMotion: true
+  });
+
+  // Two quick side bursts; no long delayed shower.
+  perfectConfettiInstance({
+    particleCount: 55,
+    spread: 80,
+    startVelocity: 42,
+    gravity: 1.5,
+    ticks: 105,
+    decay: 0.94,
+    origin: { x: 0.08, y: 0.65 },
+    colors,
+    disableForReducedMotion: true
+  });
+
+  perfectConfettiInstance({
+    particleCount: 55,
+    spread: 80,
+    startVelocity: 42,
+    gravity: 1.5,
+    ticks: 105,
+    decay: 0.94,
+    origin: { x: 0.92, y: 0.65 },
+    colors,
+    disableForReducedMotion: true
+  });
+}
+
+/* Trigger only when the perfect modal opens; reset after it closes. */
+const perfectModal = document.getElementById("Perfect-modal");
+
+if (perfectModal) {
+  new MutationObserver(() => {
+    if (perfectModal.classList.contains("show")) {
+      perfectConfettiPlayed = false;
+      launchPerfectConfetti();
+    } else {
+      perfectConfettiPlayed = false;
+    }
+  }).observe(perfectModal, {
+    attributes: true,
+    attributeFilter: ["class"]
+  });
+}
+
+
+
+    // Popup for content/iframes
+    function showDiv(id) {
+      document.querySelectorAll(".content").forEach(div => {
+        div.classList.remove("show");
+      });
+      document.getElementById(id).classList.add("show");
+      document.getElementById("modal").classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function changeSlide(button, direction) {
+      const slider = button.closest(".image-slider");
+      const images = slider.querySelectorAll(".slider-image");
+      let currentIndex = Array.from(images).findIndex(image =>
+        image.classList.contains("active")
+      );
+      if (currentIndex === -1 || images.length === 0) {
+        return;
+      }
+      images[currentIndex].classList.remove("active");
+      currentIndex = (currentIndex + direction + images.length) % images.length;
+      images[currentIndex].classList.add("active");
+      slider.querySelector(".image-counter").textContent = `${currentIndex + 1} / ${images.length}`;
+    }
+
+    function closePopup() {
+      document.getElementById("modal").classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    function closeOutside(event) {
+      if (event.target.id === "modal") {
+        closePopup();
+      }
+    }
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closePopup();
+        closeFailModal();
+        closeAlmostModal();
+      }
+    });
+
+    document.querySelectorAll(".image-slider").forEach(slider => {
+      const images = slider.querySelectorAll(".slider-image");
+      if (images.length <= 1) {
+        slider.classList.add("single-image");
+      }
+      images.forEach((image, index) => {
+        image.classList.toggle("active", index === 0);
+      });
+      const counter = slider.querySelector(".image-counter");
+      if (counter) {
+        counter.textContent = `1 / ${images.length}`;
+      }
+    });
+  </script>
+</body>
+</html>
