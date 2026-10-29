@@ -1962,64 +1962,193 @@ if (perfectModal) {
     })();
   </script>
 
-  <!-- Automatic Korean translation: the English grammar game is excluded. -->
+  <!-- Automatic Korean translation based on browser/device language preference. -->
   <div id="google_translate_element" aria-hidden="true"></div>
+  <div id="language-switcher" aria-label="Website language" role="group">
+    <button type="button" data-site-language="ko" aria-label="View website in Korean">한국어</button>
+  </div>
   <style>
-    #google_translate_element { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip-path: inset(50%) !important; white-space: nowrap !important; }
-    .goog-te-banner-frame, iframe.goog-te-banner-frame, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
-    body { top: 0 !important; }
-    html { margin-top: 0 !important; }
+    #google_translate_element {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      clip-path: inset(50%) !important;
+      white-space: nowrap !important;
+    }
+    #language-switcher {
+      position: fixed; right: 14px; bottom: 14px; z-index: 99999;
+      display: flex; gap: 4px; padding: 5px;
+      border: 1px solid rgba(148,163,184,.45); border-radius: 999px;
+      background: rgba(255,255,255,.94); box-shadow: 0 4px 18px rgba(15,23,42,.14);
+      backdrop-filter: blur(8px); font: 600 12px/1.2 system-ui, sans-serif;
+      opacity: 1; transition: opacity .35s ease, background-color .35s ease,
+        border-color .35s ease, box-shadow .35s ease;
+    }
+    #language-switcher.is-scroll-transparent {
+      opacity: .18;
+      background: rgba(255,255,255,.25);
+      border-color: rgba(148,163,184,.15);
+      box-shadow: none;
+    }
+    #language-switcher.is-language-hidden {
+      display: none !important;
+    }
+    #language-switcher button {
+      border: 0; border-radius: 999px; padding: 7px 10px;
+      color: #334155; background: transparent; cursor: pointer;
+    }
+    #language-switcher button:hover, #language-switcher button:focus-visible {
+      color: #fff; background: #334155; outline: none;
+    }
+    /* Keep Google's translation toolbar from covering the site navigation. */
+    .goog-te-banner-frame,
+    iframe.goog-te-banner-frame,
+    iframe.skiptranslate,
+    body > .skiptranslate,
+    .skiptranslate > iframe,
+    #goog-gt-tt,
+    .goog-te-balloon-frame,
+    .goog-te-menu-frame,
+    .goog-te-spinner-pos {
+      display: none !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      max-height: 0 !important;
+    }
+    html, body {
+      top: 0 !important;
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+    /* Keep the English grammar game excluded from machine translation. */
+    #game, #game * { translate: none !important; }
   </style>
   <script>
     (function () {
-      let translationStarted = false;
-      let countryIsKorea = false;
+      let translateScriptRequested = false;
+      let translateInitialized = false;
+      let desiredLanguage = 'en';
+      let scrollReturnTimer = null;
+      const languageSwitcher = document.getElementById('language-switcher');
 
-      function startKoreanTranslation() {
-        if (translationStarted) return;
-        const shouldTranslate = countryIsKorea || /^ko(?:-|$)/i.test(navigator.language || '') ||
-          (navigator.languages || []).some(lang => /^ko(?:-|$)/i.test(lang));
-        if (!shouldTranslate) return;
+      // This switcher is intended only for Korean-speaking visitors.
+      // Keep it hidden for Filipino/Tagalog, English, and all other browser languages.
+      function updateLanguageSwitcherVisibility() {
+        if (!languageSwitcher) return;
+        const browserLanguages = (navigator.languages && navigator.languages.length
+          ? navigator.languages
+          : [navigator.language || ''])
+          .map(function (lang) { return String(lang).toLowerCase(); });
+        const isKoreanSpeaker = browserLanguages.some(function (lang) {
+          return lang === 'ko' || lang.startsWith('ko-');
+        });
+        const isAlreadyKorean = desiredLanguage === 'ko' ||
+          document.cookie.split(';').some(function (item) {
+            return item.trim().indexOf('googtrans=/en/ko') === 0;
+          }) ||
+          (document.documentElement.lang || '').toLowerCase().startsWith('ko');
 
-        const combo = document.querySelector('.goog-te-combo');
-        if (!combo) return;
-        combo.value = 'ko';
-        combo.dispatchEvent(new Event('change', { bubbles: true }));
-        translationStarted = true;
+        // Show the Korean option only for a Korean browser language, and hide it
+        // once the website is already using Korean.
+        languageSwitcher.classList.toggle('is-language-hidden', !isKoreanSpeaker || isAlreadyKorean);
       }
 
-      window.googleTranslateElementInit = function () {
-        new google.translate.TranslateElement({
-          pageLanguage: 'en',
-          includedLanguages: 'ko',
-          autoDisplay: false,
-          multilanguagePage: true
-        }, 'google_translate_element');
+      // Fade the button while scrolling; restore it 10 seconds after scrolling stops.
+      function handlePageScroll() {
+        if (!languageSwitcher || languageSwitcher.classList.contains('is-language-hidden')) return;
+        languageSwitcher.classList.add('is-scroll-transparent');
+        if (scrollReturnTimer) clearTimeout(scrollReturnTimer);
+        scrollReturnTimer = setTimeout(function () {
+          languageSwitcher.classList.remove('is-scroll-transparent');
+          scrollReturnTimer = null;
+        }, 10000);
+      }
+      window.addEventListener('scroll', handlePageScroll, { passive: true });
+
+      function keepTranslateBannerHidden() {
+        const hideBanner = function () {
+          document.querySelectorAll(
+            '.goog-te-banner-frame, iframe.goog-te-banner-frame, iframe.skiptranslate, body > .skiptranslate'
+          ).forEach(function (element) {
+            element.style.setProperty('display', 'none', 'important');
+            element.style.setProperty('visibility', 'hidden', 'important');
+            element.style.setProperty('height', '0', 'important');
+          });
+          document.documentElement.style.setProperty('margin-top', '0', 'important');
+          document.body.style.setProperty('top', '0', 'important');
+        };
+        hideBanner();
+        const observer = new MutationObserver(hideBanner);
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+      }
+
+      keepTranslateBannerHidden();
+
+      function browserPrefersKorean() {
+        const languages = [];
+        if (navigator.language) languages.push(navigator.language);
+        if (Array.isArray(navigator.languages)) languages.push(...navigator.languages);
+        return languages.some(function (language) {
+          return /^ko(?:-|$)/i.test(language || '');
+        });
+      }
+
+      function applyLanguageWhenReady() {
         let attempts = 0;
         const timer = setInterval(function () {
-          startKoreanTranslation();
-          if (translationStarted || ++attempts > 40) clearInterval(timer);
+          const combo = document.querySelector('.goog-te-combo');
+          if (combo) {
+            combo.value = desiredLanguage === 'ko' ? 'ko' : '';
+            combo.dispatchEvent(new Event('change', { bubbles: true }));
+            updateLanguageSwitcherVisibility();
+            clearInterval(timer);
+          } else if (++attempts > 60) clearInterval(timer);
         }, 250);
-      };
+      }
 
-      // Detect visitors connecting from South Korea; if this fails, Korean browser
-      // language detection above remains available. No location permission is requested.
-      fetch('https://ipapi.co/country/', { cache: 'force-cache' })
-        .then(response => response.ok ? response.text() : '')
-        .then(country => {
-          countryIsKorea = country.trim().toUpperCase() === 'KR';
-          if (countryIsKorea) {
-            let attempts = 0;
-            const timer = setInterval(function () {
-              startKoreanTranslation();
-              if (translationStarted || ++attempts > 40) clearInterval(timer);
-            }, 250);
-          }
-        })
-        .catch(function () {});
+      function loadGoogleTranslate() {
+        if (translateScriptRequested) {
+          if (translateInitialized) applyLanguageWhenReady();
+          return;
+        }
+        translateScriptRequested = true;
+        window.googleTranslateElementInit = function () {
+          if (translateInitialized || !window.google || !google.translate) return;
+          translateInitialized = true;
+          new google.translate.TranslateElement({
+            pageLanguage: 'en', includedLanguages: 'ko', autoDisplay: false,
+            multilanguagePage: true
+          }, 'google_translate_element');
+          applyLanguageWhenReady();
+        };
+        const script = document.createElement('script');
+        script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        script.onerror = function () { translateScriptRequested = false; };
+        document.head.appendChild(script);
+      }
+
+      document.querySelectorAll('[data-site-language]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          desiredLanguage = button.getAttribute('data-site-language') === 'ko' ? 'ko' : 'en';
+          updateLanguageSwitcherVisibility();
+          loadGoogleTranslate();
+          if (translateInitialized) applyLanguageWhenReady();
+        });
+      });
+
+      // Websites cannot reliably read the currently active OS keyboard/input method.
+      // Korean is selected automatically when the browser's preferred language is Korean.
+      if (browserPrefersKorean()) {
+        desiredLanguage = 'ko';
+        updateLanguageSwitcherVisibility();
+        loadGoogleTranslate();
+      } else {
+        updateLanguageSwitcherVisibility();
+      }
     })();
   </script>
-  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 
 </body>
 </html>
